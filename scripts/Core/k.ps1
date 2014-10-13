@@ -53,8 +53,10 @@ function k-run {
         $sourceDirectory
     )
 
-    $env:K_APPBASE = $sourceDirectory
-    k $command
+    exec {
+        $env:K_APPBASE = $sourceDirectory
+        k $command
+    }
 }
 
 ## inspired by _k-test.shade from KoreBuild
