@@ -18,20 +18,24 @@ $appProjects = Get-ChildItem "$srcRoot\**\$projectFileName" | foreach { $_.FullN
 $testProjects = Get-ChildItem "$testsRoot\**\$projectFileName" | foreach { $_.FullName }
 
 Include ".\core\k.ps1"
+Include ".\core\utils.ps1"
 
 task default -depends Test
 
 task Test -depends Build, Clean { 
     $testMessage
+    
+    $testProjects | foreach {
+        Write-Host $_
+        k-run-test -projectFile $_
+    }
 }
 
 task Check {
-    
     if($(test-globalkpm) -eq $false) { throw "kpm doesn't exists globally" }
 }
 
 task Build -depends Clean, Check, Restore { 
-
     $compileMessage
     
     $appProjects | foreach {
