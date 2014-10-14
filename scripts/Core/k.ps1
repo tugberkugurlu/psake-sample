@@ -59,6 +59,26 @@ function k-run {
     }
 }
 
+function k-pack {
+    param(
+        [String]
+        [parameter(Mandatory=$true)]
+        $sourceDirectory,
+        
+        [String]
+        [parameter(Mandatory=$true)]
+        $configuration,
+        
+        [String]
+        [parameter(Mandatory=$true)]
+        $outputDirectory
+    )
+    
+    exec {
+        kpm pack "$sourceDirectory" --configuration $configuration --out $outputDirectory
+    }
+}
+
 ## inspired by _k-test.shade from KoreBuild
 function k-run-test {
     param(
